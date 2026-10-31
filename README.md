@@ -1,109 +1,301 @@
 # Sales Analytics Pipeline
 
-Projeto de portfólio para praticar Python, Pandas, SQL/SQLite, visualização de dados, Excel, logging e testes automatizados.
+**End-to-End Data Engineering and Sales Analytics Project**
 
-## Funcionalidades
-- Geração de dados fictícios e reproduzíveis.
-- Validação e limpeza de registros.
-- Métricas de faturamento, unidades e ticket médio.
-- Análises por mês, produto, categoria e região.
-- Persistência em SQLite.
-- Exportação de CSV, Excel e gráficos PNG.
-- Logs da execução e testes com `unittest`.
+A Python-based data pipeline designed to generate, clean, process, analyze, and store sales data, producing analytical reports, visualizations, and structured datasets.
 
-## Tecnologias
-Python 3.10+, pandas, matplotlib, openpyxl, SQLite e unittest.
+---
 
-## Estrutura
+## Project Overview
+
+This project implements an end-to-end sales analytics pipeline, integrating data engineering and data analysis practices.
+
+The solution processes raw sales data, performs data quality validation, calculates business metrics, stores processed records in SQLite, and generates analytical reports in CSV and Excel formats.
+
+## Architecture
+
+```text
+Raw Sales Data (CSV)
+        |
+        v
+Data Generation
+        |
+        v
+Data Cleaning and Validation
+        |
+        v
+Data Transformation
+        |
+        +--------------------+
+        |                    |
+        v                    v
+   SQLite Database     Data Analysis
+                             |
+                             v
+                     Business Metrics
+                             |
+                 +-----------+-----------+
+                 |           |           |
+                 v           v           v
+               CSV         Excel      Charts
+```
+
+## Technologies
+
+- Python
+- Pandas
+- NumPy
+- Matplotlib
+- SQLite
+- SQL
+- OpenPyXL
+- Unit Testing
+- Git and GitHub
+
+## Main Features
+
+### Data Engineering
+- Automated data generation when the raw dataset is unavailable.
+- CSV data ingestion.
+- Data cleaning and validation.
+- Duplicate record removal.
+- Missing and invalid value handling.
+- Data type conversion.
+- Revenue calculation.
+- Structured data storage using SQLite.
+
+### Data Analytics
+- Sales performance analysis.
+- Revenue analysis.
+- Product analysis.
+- Regional analysis.
+- Category analysis.
+- Monthly sales analysis.
+- Business metrics generation.
+
+### Data Visualization
+- Monthly revenue charts.
+- Product revenue charts.
+- Regional revenue charts.
+
+### Reporting
+- Processed CSV datasets.
+- Consolidated analytical reports.
+- Excel workbook with multiple analytical sheets.
+- Execution logs.
+
+### Quality Assurance
+- Automated unit tests.
+- Data validation.
+- Exception handling.
+- Pipeline execution monitoring.
+
+## Project Structure
+
 ```text
 sales-analytics-pipeline/
+│
 ├── data/
-│   ├── raw/.gitkeep
-│   └── processed/.gitkeep
+│   ├── raw/
+│   └── processed/
+│
+├── logs/
+│
 ├── outputs/
-│   ├── charts/.gitkeep
-│   └── reports/.gitkeep
-├── logs/.gitkeep
+│   ├── charts/
+│   └── reports/
+│
 ├── src/
 │   ├── __init__.py
-│   ├── config.py
-│   ├── generate_data.py
-│   ├── clean_data.py
 │   ├── analyze_data.py
-│   ├── database.py
 │   ├── charts.py
+│   ├── clean_data.py
+│   ├── config.py
+│   ├── database.py
+│   ├── generate_data.py
 │   └── pipeline.py
+│
 ├── tests/
 │   └── test_pipeline.py
-├── requirements.txt
+│
 ├── .gitignore
-└── README.md
+├── README.md
+└── requirements.txt
 ```
 
-## Instalação
+## Installation
 
-### Linux / Ubuntu
+Clone the repository:
+
 ```bash
-python3 -m venv .venv
+git clone https://github.com/vitor1914/sales-analytics-pipeline.git
+```
+
+Navigate to the project directory:
+
+```bash
+cd sales-analytics-pipeline
+```
+
+Create a virtual environment:
+
+```bash
+python -m venv .venv
+```
+
+Activate the environment on Linux:
+
+```bash
 source .venv/bin/activate
-python -m pip install --upgrade pip
+```
+
+Install dependencies:
+
+```bash
 pip install -r requirements.txt
 ```
 
-### Windows
-```powershell
-py -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-```
+## Running the Pipeline
 
-## Executar o projeto
-Na pasta raiz do projeto:
+Execute the complete pipeline:
+
 ```bash
 python -m src.pipeline
 ```
 
-Por padrão, a execução cria dados fictícios se `data/raw/vendas.csv` não existir. Para gerar uma nova base fictícia:
-```bash
-python -m src.generate_data
-```
+The pipeline performs the following operations:
 
-## Testes
+1. Creates the required directories.
+2. Generates sample data if the raw dataset does not exist.
+3. Loads raw sales records.
+4. Cleans and validates the data.
+5. Calculates revenue metrics.
+6. Stores processed records in SQLite.
+7. Generates analytical charts.
+8. Exports analytical datasets to CSV.
+9. Creates an Excel report.
+10. Executes an example SQL query.
+
+## Running Tests
+
+Execute the automated tests:
+
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-## Principais saídas
-- `data/raw/vendas.csv`: base bruta de exemplo.
-- `data/processed/vendas_tratadas.csv`: dados validados.
-- `outputs/reports/resumo_geral.csv`: indicadores gerais.
-- `outputs/reports/analise_vendas.xlsx`: relatório com várias abas.
-- `outputs/charts/`: gráficos PNG.
-- `data/processed/vendas.db`: banco SQLite.
-- `logs/pipeline.log`: histórico da execução.
+## Generated Outputs
 
-## Regras de negócio
-- `faturamento = quantidade * preco_unitario`
-- `ticket médio = faturamento total / número de pedidos`
-- Registros com campos essenciais ausentes, quantidade/preço não positivos ou datas inválidas são descartados.
-- Duplicatas exatas são removidas.
-- Os dados são fictícios e não representam uma empresa real.
+| Output | Description |
+|---|---|
+| `vendas_tratadas.csv` | Cleaned sales dataset |
+| `vendas.db` | SQLite database |
+| `resumo_geral.csv` | General analytical summary |
+| `vendas_mensais.csv` | Monthly sales analysis |
+| `vendas_produto.csv` | Product performance |
+| `vendas_regiao.csv` | Regional performance |
+| `vendas_categoria.csv` | Category analysis |
+| `analise_vendas.xlsx` | Consolidated Excel report |
 
-## Sugestão de commits diários
-1. Estrutura inicial e documentação.
-2. Gerador de dados fictícios.
-3. Validação de colunas e tipos.
-4. Remoção de duplicatas e registros inválidos.
-5. Métricas gerais.
-6. Análise mensal.
-7. Análise por produto e categoria.
-8. Banco SQLite.
-9. Exportação Excel.
-10. Gráficos.
-11. Logging e tratamento de exceções.
-12. Testes automatizados.
-13. Refatoração e documentação dos resultados.
+### Visualizations
 
-## Licença
-MIT
+- Monthly revenue.
+- Revenue by product.
+- Revenue by region.
+
+## Data Quality
+
+The cleaning module validates required columns, removes duplicate records, handles missing values, converts data types, validates numerical fields, and calculates revenue.
+
+It also generates data quality statistics, including:
+
+- Input records.
+- Removed duplicates.
+- Invalid records.
+- Valid records.
+- Data retention percentage.
+
+## Engineering Concepts Demonstrated
+
+- ETL pipeline development.
+- Data ingestion and transformation.
+- Data quality and validation.
+- Relational database integration.
+- SQL querying.
+- Analytical reporting.
+- Data visualization.
+- Automated testing.
+- Modular Python architecture.
+
+## Author
+
+**Israel Vitor**
+
+Data Analytics | Data Engineering
+
+GitHub: [@vitor1914](https://github.com/vitor1914)
+
+---
+
+# Versão em Português
+
+## Visão Geral
+
+Projeto de Engenharia de Dados e Análise de Vendas desenvolvido em Python, com implementação de um pipeline ETL para geração, ingestão, limpeza, transformação, análise e armazenamento de dados.
+
+A solução integra Pandas, SQLite, SQL e visualizações analíticas, gerando relatórios estruturados em CSV e Excel.
+
+## Funcionalidades
+
+- Geração automatizada de dados fictícios.
+- Ingestão de arquivos CSV.
+- Limpeza e validação de dados.
+- Remoção de registros duplicados.
+- Tratamento de valores ausentes e inválidos.
+- Transformação e padronização de dados.
+- Cálculo de faturamento.
+- Armazenamento em banco SQLite.
+- Consultas SQL.
+- Análise de vendas por produto, categoria e região.
+- Análise de faturamento mensal.
+- Geração de gráficos.
+- Exportação de relatórios CSV e Excel.
+- Logs de execução.
+- Testes automatizados.
+
+## Tecnologias Utilizadas
+
+- Python
+- Pandas
+- NumPy
+- Matplotlib
+- SQLite
+- SQL
+- OpenPyXL
+- Unittest
+- Git e GitHub
+
+## Objetivo
+
+Demonstrar conhecimentos práticos em Engenharia de Dados, desenvolvimento de pipelines ETL, qualidade de dados, integração com bancos de dados relacionais e geração de informações analíticas para suporte à tomada de decisão.
+
+## Execução
+
+```bash
+pip install -r requirements.txt
+python -m src.pipeline
+```
+
+## Testes
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+## Autor
+
+**Israel Vitor**
+
+Data Analytics | Data Engineering
+
+GitHub: [@vitor1914](https://github.com/vitor1914)
